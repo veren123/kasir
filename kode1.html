@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang</title>
+    <link rel="icon" href="shop_118074.png">
+    <style>
+        /* Reset default margin dan padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #00ffcc, #ff00ff);
+            color: #fff;
+            text-align: center;
+            flex-direction: column;
+            overflow: hidden;
+            animation: backgroundAnimation 10s ease infinite;
+        }
+
+        /* Animasi background bergerak */
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 0.5s;
+        }
+
+        /* Animasi fade-in */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animasi transisi bahasa */
+        .greeting {
+            font-size: 1.5rem;
+            opacity: 0;
+            position: absolute;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Efek muncul satu per satu */
+        .show-greeting {
+            opacity: 1;
+        }
+
+        .button {
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 2s forwards 2.5s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.6);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Selamat Datang di website kasir !</h1>
+    
+    <!-- Kontainer untuk pesan sambutan -->
+    <div class="greeting" id="greetingIndo">Selamat Pagi (Bahasa Indonesia)</div>
+    <div class="greeting" id="greetingEng">Good Morning (English)</div>
+    <div class="greeting" id="greetingDutch">Goedemorgen (belanda)</div>
+
+    <!-- Tombol untuk menuju halaman kasir.html -->
+    <button class="button" id="goToKasirBtn">Masuk ke Kasir</button>
+
+    <script>
+        // Fungsi untuk mendapatkan waktu saat ini dan menampilkan pesan bergantian
+        function getGreeting() {
+            const currentHour = new Date().getHours(); // Mengambil jam saat ini
+
+            let greetingIndo = 'Selamat Pagi (Bahasa Indonesia)';
+            let greetingEng = 'Good Morning (English)';
+            let greetingDutch = 'Goedemorgen (belanda)';
+
+            // Menentukan pesan berdasarkan waktu
+            if (currentHour >= 5 && currentHour < 10) {
+                greetingIndo = 'Selamat Pagi (Bahasa Indonesia)';
+                greetingEng = 'Good Morning (English)';
+                greetingDutch = 'Goedemorgen (belanda)';
+            } else if (currentHour >= 10 && currentHour < 15) {
+                greetingIndo = 'Selamat Siang (Bahasa Indonesia)';
+                greetingEng = 'Good Afternoon (English)';
+                greetingDutch = 'Goedemiddag (belanda)';
+            } else if (currentHour >= 15 && currentHour < 18) {
+                greetingIndo = 'Selamat Sore (Bahasa Indonesia)';
+                greetingEng = 'Good Evening (English)';
+                greetingDutch = 'Goedeavond (belanda)';
+            } else {
+                greetingIndo = 'Selamat Malam (Bahasa Indonesia)';
+                greetingEng = 'Good Night (English)';
+                greetingDutch = 'Goedenacht (belanda)';
+            }
+
+            // Menampilkan pesan ke elemen dengan id "greeting"
+            document.getElementById('greetingIndo').innerText = greetingIndo;
+            document.getElementById('greetingEng').innerText = greetingEng;
+            document.getElementById('greetingDutch').innerText = greetingDutch;
+
+            // Menampilkan pesan bergantian
+            showGreetings();
+        }
+
+        // Fungsi untuk menampilkan pesan bergantian
+        function showGreetings() {
+            const greetings = [
+                document.getElementById('greetingIndo'),
+                document.getElementById('greetingEng'),
+                document.getElementById('greetingDutch')
+            ];
+
+            let currentIndex = 0;
+
+            // Fungsi untuk mengubah pesan setiap 3 detik
+            setInterval(() => {
+                // Menyembunyikan pesan sebelumnya
+                greetings[currentIndex].classList.remove('show-greeting');
+                
+                // Menampilkan pesan berikutnya
+                currentIndex = (currentIndex + 1) % greetings.length;
+                greetings[currentIndex].classList.add('show-greeting');
+            }, 3000); // Ganti setiap 3 detik
+        }
+
+        // Panggil fungsi getGreeting saat halaman dimuat
+        window.onload = getGreeting;
+
+        // Arahkan ke halaman kasir.html setelah tombol diklik
+        document.getElementById('goToKasirBtn').addEventListener('click', function() {
+            window.location.href = 'kasir.html';  // Ganti dengan URL halaman kasir yang sesuai
+        });
+    </script>
+</body>
+</html>
